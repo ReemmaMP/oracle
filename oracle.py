@@ -22,12 +22,7 @@ def common_letter():
 #line count
 def line_count():
     text_file = open(filename)
-    count = 0
-    with text_file as f:
-        for line in f:
-            count+=1
-    text_file.close()
-    return count
+    return text_file.read().count('\n') + 1
 
 #whitespace delimited word count
 def word_count():
