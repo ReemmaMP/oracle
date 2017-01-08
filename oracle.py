@@ -1,38 +1,64 @@
 import collections
 import string
-text_file = open("text.txt")
+import re
+filename = "text.txt"
 
 #most common letter
-def common_letter(text_file):
+def common_letter():
     # print collections.Counter(text_file.read())
-    return max(collections.Counter(text_file.read()))
+    # non ascii is replaced
+    text_file = open(filename)
+    file_content = re.sub('[^0-9a-zA-Z]+', '', text_file.read())
+    letter_counter = collections.Counter(file_content)
+    max_occurence_number = max(letter_counter.values())
+
+    max_occ_letters = []
+    for letter in letter_counter:
+      	if letter_counter[letter] == max_occurence_number:
+          		max_occ_letters.append(letter)
+    text_file.close()
+    return max_occ_letters
 
 #line count
-def line_count(text_file):
+def line_count():
+    text_file = open(filename)
     count = 0
-    with open("text.txt")as f:
+    with text_file as f:
         for line in f:
             count+=1
+    text_file.close()
     return count
 
 #whitespace delimited word count
-def word_count(text_file):
+def word_count():
+    text_file = open(filename)
     total = 0
-    for line in open("text.txt"):
+    for line in text_file:
         total += len(line.split())
+    text_file.close()
     return total
 
 #average number of letters per word (to one decimal place)
-def average_word_length(text_file):
-    with open('text.txt') as f:
-        number = sum(collections.Counter(letter for line in f
-                  for letter in line.lower()
-                  if letter in string.ascii_lowercase).values())/word_count(text_file)
-        return round(number, 1)
+def average_word_length():
+  	# gets each line in an array
+    text_file = open(filename)
+    line_array = text_file.read().split('\n')
+    # initialise count and total
+    count, total = 0, 0
+    # iterate through each line
+    for line in line_array:
+      	# iterate through each words in the array
+        # get rid of punctuations
+        line.translate(None, string.punctuation)
+        for word in line.split():
+          	# here it could have "", since there could be two spaces together
+            if word != "":
+              	total += len(word)
+                count += 1
+    text_file.close()
+    return total / count
 
-print common_letter(text_file)
-print line_count(text_file)
-print word_count(text_file)
-print average_word_length(text_file)
-
-text_file.close()
+print common_letter()
+print line_count()
+print word_count()
+print "{0:.1f}".format(average_word_length())
