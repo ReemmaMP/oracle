@@ -5,3 +5,4 @@ In order to run the file:
 -	Run the python file using the command `py oracle.py` and the statistics will be printed to the terminal/command prompt. 
 Example output shown below:
  
+![capture](https://cloud.githubusercontent.com/assets/15091596/21762038/7a05d296-d64e-11e6-8939-43f65adb14cf.JPG)
